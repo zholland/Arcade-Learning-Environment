@@ -143,6 +143,8 @@ public:
   //followed by the green colours and then the blue colours
   void getScreenRGB(std::vector<unsigned char>& output_rgb_buffer);
 
+  void getALEScreenFromRGB(std::vector<unsigned char>& output_pixel_buffer, ALEScreen& screen);
+
   // Returns the current RAM content
   const ALERAM &getRAM();
 

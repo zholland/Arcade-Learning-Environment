@@ -17,6 +17,7 @@
 #include <cassert>
 #include <string.h>
 #include <stdio.h>
+#include <limits>
 #include <math.h>
 #include <fstream>
 #include "Palettes.hpp"
@@ -98,6 +99,74 @@ void ColourPalette::applyPaletteRGB(std::vector<unsigned char>& dst_buffer, uInt
         dst_buffer[i+2] = (unsigned char) ((rgb >>  0));    // b
     }
 }
+
+void ColourPalette::getALEScreenFromRGB(std::vector<unsigned char>& dst_buffer, uInt8 *src_buffer, size_t src_size) {
+    std::vector<int> seaquestPalette = {0,
+            4,
+            6,
+            8,
+            12,
+            14,
+            20,
+            24,
+            26,
+            36,
+            50,
+            52,
+            68,
+            84,
+            100,
+            116,
+            130,
+            132,
+            134,
+            144,
+            146,
+            148,
+            150,
+            152,
+            154,
+            156,
+            160,
+            168,
+            176,
+            182,
+            192,
+            200,
+            232,
+            248};
+    uInt8 *p = src_buffer;
+    for (size_t i = 0; i < src_size * 3; i += 3, p++) {
+        double minDistance = std::numeric_limits<double>::max();
+//        for (int j = 0; j < 256; j += 2) {
+        for (int j : seaquestPalette) {
+            int r, g, b;
+            getRGB(j, r, g, b);
+            double distance = sqrt(pow((r-(int)dst_buffer[i+0]), 2) + pow((g-(int)dst_buffer[i+1]), 2) + pow((b-(int)dst_buffer[i+2]), 2));
+            if(distance < minDistance) {
+                minDistance = distance;
+                *p = (uInt8) j;
+                if (minDistance == 0.0) {
+                    break;
+                }
+            }
+        }
+    }
+}
+
+//void ColourPalette::getALEScreenFromRGB(std::vector<unsigned char>& dst_buffer, uInt8 *src_buffer, size_t src_size) {
+//    uInt8 *p = src_buffer;
+//    for(size_t i = 0; i < src_size * 3; i += 3, p++){
+//        //int rgb = m_palette[*p];
+//        uInt32 rgb = (((uInt32)dst_buffer[i+0]) << 16) | (((uInt32)dst_buffer[i+1]) << 8) | (((uInt32)dst_buffer[i+2]) << 0);
+//        for (uInt8 j = 0; j < 256; j++) {
+//            if(m_palette[j] == rgb) {
+//                *p = j;
+//                break;
+//            }
+//        }
+//    }
+//}
 
 void ColourPalette::applyPaletteGrayscale(uInt8* dst_buffer, uInt8 *src_buffer, size_t src_size)
 {

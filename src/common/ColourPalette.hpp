@@ -43,6 +43,7 @@ class ColourPalette {
          */
         void applyPaletteRGB(uInt8* dst_buffer, uInt8 *src_buffer, size_t src_size);
         void applyPaletteRGB(std::vector<unsigned char>& dst_buffer, uInt8 *src_buffer, size_t src_size);
+        void getALEScreenFromRGB(std::vector<unsigned char>& dst_buffer, uInt8 *src_buffer, size_t src_size);
 
         /**
             Applies the current grayscale palette to the src_buffer and returns the results in dst_buffer

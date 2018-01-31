@@ -171,8 +171,8 @@ void ScreenExporter::save(const ALEScreen &screen, const std::string &filename) 
     }
 
     // Now write the PNG proper
-    writePNGHeader(out, screen, true);
-    writePNGData(out, screen, m_palette, true);
+    writePNGHeader(out, screen, false);
+    writePNGData(out, screen, m_palette, false);
     writePNGEnd(out);
 
     out.close();

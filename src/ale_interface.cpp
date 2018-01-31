@@ -362,6 +362,16 @@ void ALEInterface::getScreenRGB(std::vector<unsigned char>& output_rgb_buffer) {
   theOSystem->colourPalette().applyPaletteRGB(output_rgb_buffer, ale_screen_data, screen_size);
 }
 
+void ALEInterface::getALEScreenFromRGB(std::vector<unsigned char>& input_rgb_buffer, ALEScreen& screen) {
+    size_t w = environment->getScreen().width();
+    size_t h = environment->getScreen().height();
+    size_t screen_size = w * h;
+
+    pixel_t *ale_screen_data = screen.getArray();
+
+    theOSystem->colourPalette().getALEScreenFromRGB(input_rgb_buffer, ale_screen_data, screen_size);
+}
+
 // Returns the current RAM content
 const ALERAM& ALEInterface::getRAM() {
   return environment->getRAM();
