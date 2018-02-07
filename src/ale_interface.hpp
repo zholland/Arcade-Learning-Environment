@@ -134,7 +134,10 @@ public:
   // Returns the current game screen
   const ALEScreen &getScreen();
 
-  //This method should receive an empty vector to fill it with
+    const ALEScreen &cloneScreen();
+    void restoreScreen(ALEScreen& screen);
+
+    //This method should receive an empty vector to fill it with
   //the grayscale colours
   void getScreenGrayscale(std::vector<unsigned char>& grayscale_output_buffer);
 
@@ -143,7 +146,7 @@ public:
   //followed by the green colours and then the blue colours
   void getScreenRGB(std::vector<unsigned char>& output_rgb_buffer);
 
-  void getALEScreenFromRGB(std::vector<unsigned char>& output_pixel_buffer, ALEScreen& screen);
+  void getALEScreenFromRGB(std::vector<unsigned char>& output_pixel_buffer, ALEScreen& screen, std::vector<int>& palette);
 
   // Returns the current RAM content
   const ALERAM &getRAM();

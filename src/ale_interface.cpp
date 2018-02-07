@@ -336,6 +336,14 @@ const ALEScreen& ALEInterface::getScreen() {
   return environment->getScreen();
 }
 
+const ALEScreen& ALEInterface::cloneScreen() {
+    return getScreen();
+}
+
+void ALEInterface::restoreScreen(ALEScreen& screen) {
+    return environment->restoreScreen(screen);
+}
+
 //This method should receive an empty vector to fill it with
 //the grayscale colours
 void ALEInterface::getScreenGrayscale(
@@ -362,14 +370,14 @@ void ALEInterface::getScreenRGB(std::vector<unsigned char>& output_rgb_buffer) {
   theOSystem->colourPalette().applyPaletteRGB(output_rgb_buffer, ale_screen_data, screen_size);
 }
 
-void ALEInterface::getALEScreenFromRGB(std::vector<unsigned char>& input_rgb_buffer, ALEScreen& screen) {
+void ALEInterface::getALEScreenFromRGB(std::vector<unsigned char>& input_rgb_buffer, ALEScreen& screen, std::vector<int>& palette) {
     size_t w = environment->getScreen().width();
     size_t h = environment->getScreen().height();
     size_t screen_size = w * h;
 
     pixel_t *ale_screen_data = screen.getArray();
 
-    theOSystem->colourPalette().getALEScreenFromRGB(input_rgb_buffer, ale_screen_data, screen_size);
+    theOSystem->colourPalette().getALEScreenFromRGB(input_rgb_buffer, ale_screen_data, screen_size, palette);
 }
 
 // Returns the current RAM content

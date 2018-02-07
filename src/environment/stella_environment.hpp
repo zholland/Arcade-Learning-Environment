@@ -47,8 +47,10 @@ class StellaEnvironment {
     /** Returns a copy of the current emulator state. Note that this doesn't include
         pseudorandomness, so that clone/restoreState are suitable for planning. */
     ALEState cloneState();
+    ALEScreen cloneScreen();
     /** Restores a previously saved copy of the state. */
     void restoreState(const ALEState&);
+    void restoreScreen(const ALEScreen&);
 
     /** Returns a copy of the current emulator state. This includes RNG state information, and
         more generally should lead to exactly reproducibility. */
@@ -122,6 +124,7 @@ class StellaEnvironment {
     std::string m_cartridge_md5; // Necessary for saving and loading emulator state
 
     std::stack<ALEState> m_saved_states; // States are saved on a stack
+    std::stack<ALEScreen> m_saved_screens;
     
     ALEState m_state; // Current environment state    
     ALEScreen m_screen; // The current ALE screen (possibly colour-averaged)

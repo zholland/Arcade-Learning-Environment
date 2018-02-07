@@ -100,46 +100,46 @@ void ColourPalette::applyPaletteRGB(std::vector<unsigned char>& dst_buffer, uInt
     }
 }
 
-void ColourPalette::getALEScreenFromRGB(std::vector<unsigned char>& dst_buffer, uInt8 *src_buffer, size_t src_size) {
-    std::vector<int> seaquestPalette = {0,
-            4,
-            6,
-            8,
-            12,
-            14,
-            20,
-            24,
-            26,
-            36,
-            50,
-            52,
-            68,
-            84,
-            100,
-            116,
-            130,
-            132,
-            134,
-            144,
-            146,
-            148,
-            150,
-            152,
-            154,
-            156,
-            160,
-            168,
-            176,
-            182,
-            192,
-            200,
-            232,
-            248};
+void ColourPalette::getALEScreenFromRGB(std::vector<unsigned char>& dst_buffer, uInt8 *src_buffer, size_t src_size, std::vector<int>& palette) {
+//    std::vector<int> seaquestPalette = {0,
+//            4,
+//            6,
+//            8,
+//            12,
+//            14,
+//            20,
+//            24,
+//            26,
+//            36,
+//            50,
+//            52,
+//            68,
+//            84,
+//            100,
+//            116,
+//            130,
+//            132,
+//            134,
+//            144,
+//            146,
+//            148,
+//            150,
+//            152,
+//            154,
+//            156,
+//            160,
+//            168,
+//            176,
+//            182,
+//            192,
+//            200,
+//            232,
+//            248};
     uInt8 *p = src_buffer;
     for (size_t i = 0; i < src_size * 3; i += 3, p++) {
         double minDistance = std::numeric_limits<double>::max();
 //        for (int j = 0; j < 256; j += 2) {
-        for (int j : seaquestPalette) {
+        for (int j : palette) {
             int r, g, b;
             getRGB(j, r, g, b);
             double distance = sqrt(pow((r-(int)dst_buffer[i+0]), 2) + pow((g-(int)dst_buffer[i+1]), 2) + pow((b-(int)dst_buffer[i+2]), 2));

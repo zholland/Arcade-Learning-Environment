@@ -95,7 +95,9 @@ void StellaEnvironment::reset() {
 void StellaEnvironment::save() {
   // Store the current state into a new object
   ALEState new_state = cloneState();
+  ALEScreen new_screen = cloneScreen();
   m_saved_states.push(new_state);
+  m_saved_screens.push(new_screen);
 }
 
 void StellaEnvironment::load() {
@@ -105,10 +107,23 @@ void StellaEnvironment::load() {
   // Deserialize it into 'm_state'
   restoreState(target_state);
   m_saved_states.pop();
+
+  ALEScreen& target_screen = m_saved_screens.top();
+
+  restoreScreen(target_screen);
+  m_saved_screens.pop();
 }
 
 ALEState StellaEnvironment::cloneState() {
   return m_state.save(m_osystem, m_settings, m_cartridge_md5, false);
+}
+
+ALEScreen StellaEnvironment::cloneScreen() {
+    return m_screen;
+}
+
+void StellaEnvironment::restoreScreen(const ALEScreen& target_screen) {
+    memcpy(m_screen.getArray(), target_screen.getArray(), m_screen.arraySize());
 }
 
 void StellaEnvironment::restoreState(const ALEState& target_state) {
